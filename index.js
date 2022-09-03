@@ -15,12 +15,20 @@ for (let serie of series) {
         <img src="image_output/${serie.name}/${station.name}.png">
         </div>
         `
+        if (!station.link) {
+            document.getElementById('audios').innerHTML += `
+            <audio controls style="display: none;" id="audio_${station.name}"  preload="none">
+                <source src="https://dl.dropboxusercontent.com/s/ise44wij0b3hcz9/Flash%20FM?dl=0" type="audio/mpeg" />
+            </audio>
+            `
+        } else {
+            document.getElementById('audios').innerHTML += `
+            <audio controls style="display: none;" id="audio_${station.name}"  preload="none">
+                <source src="${station.link}" type="audio/mpeg" />
+            </audio>
+            `
+        }
 
-        document.getElementById('audios').innerHTML += `
-        <audio controls style="display: none;" id="audio_${station.name}"  preload="none">
-            <source src="output/${serie.name}/${station.name}.mp3" type="audio/mpeg" />
-        </audio>
-        `
     }
 
 }
@@ -34,6 +42,7 @@ var swiper = new Swiper(".swiper", {
     
 swiper.on('activeIndexChange', async function () {
     let active = swiper.activeIndex
+    let preload_list = [active - 3, active - 2, active -1, active + 1, active + 2, active + 3, active + 4]
     localStorage.setItem("last_index", active)
 
     let mapped_active = active >= total_len ? active - total_len : active;
@@ -41,9 +50,20 @@ swiper.on('activeIndexChange', async function () {
     shifted_active += shifted_active < 0 ? total_len : 0;
     let current_active_object = series_flattened[shifted_active];
 
+    let mapped_preload = preload_list.map(i => i >= total_len ? i - total_len : i);
+    let shifted_preload = mapped_preload.map(i => i - slides_per_view);
+    shifted_preload = shifted_preload.map(i => i + (i < 0 ? total_len : 0));
+    let preload_objects = shifted_preload.map(i => series_flattened[i]);
+
     for (let last_audio of document.querySelectorAll('audio')) {
         last_audio.pause();
     }
+    
+    for (let preload_object of preload_objects) {
+        let audio_for_preload = document.getElementById(`audio_${preload_object.name}`)
+        audio_for_preload.load();
+    }
+
     let audio = document.getElementById(`audio_${current_active_object.name}`)
     audio.play();
 
@@ -51,7 +71,7 @@ swiper.on('activeIndexChange', async function () {
     while (!audio.duration) {
         wait_counter += 1;
         await sleep(5);
-        if (wait_counter >= 20) {
+        if (wait_counter >= 2000) {
             break;
         }
     }
