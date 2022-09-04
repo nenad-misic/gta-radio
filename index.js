@@ -126,9 +126,9 @@ swiper.on('activeIndexChange', function () {
         while (!audio.duration) {
             wait_counter += 1;
             await sleep(5);
-            if (wait_counter >= 4000) {
+            if (wait_counter >= 2000) {
                 localStorage.removeItem("last_index");
-                document.location.reload();
+                break;
             }
         }
 
