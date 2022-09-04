@@ -3,6 +3,26 @@ body[scroll="true"] .swiper-slide>img {
   opacity: 0.7 !important;
 }
 
+.loading_ruler {
+  display: none;
+  width: 0vw;
+  margin-left: 10vw;
+  position: absolute;
+  border: 1px solid #61afff;
+  transition: opacity 0.3s;
+}
+
+.loading_ruler_track {
+  width: 80vw;
+  margin-left: 10vw;
+  position: absolute;
+  border: 1px solid #4d4b63;
+}
+
+.transitioned {
+  transition: width 1.4s linear;
+}
+
 @font-face {
   font-family: 'Orbitron';
   font-style: normal;
@@ -33,10 +53,10 @@ body[scroll="true"] .swiper-slide>img {
 }
 
 .overlay>img {
-  width: 20% !important;
+  width: 15em !important;
 }
 .overlay_loading>img {
-  width: 20% !important;
+  width: 15em !important;
 }
 img {
   object-fit: contain;
@@ -82,9 +102,9 @@ img {
 
   .carousel-container {
     position: absolute;
-    width: 100vw;
-    height: 20vh;
-    padding: 20px 0;
+    height: calc(100vh - 60px);
+    padding: 30px;
+    width: calc(100vw - 60px);
   }
 
   body {
@@ -100,12 +120,24 @@ img {
             user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
   }
-  
+  @media (min-width:320px)  {
+    .clock {
+      width: 20rem;
+      height: 20rem;
+      padding: 1rem;
+    }
+  }
+
+  @media (min-width:1281px) {
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      padding: 2rem;
+    }
+  }
+
   .clock {
-    width: 30rem;
-    height: 30rem;
     position: relative;
-    padding: 2rem;
     border: 7px solid #282828;
     box-shadow: -4px -4px 10px rgba(67,67,67,0.5),
                   inset 4px 4px 10px rgba(0,0,0,0.5),
@@ -202,13 +234,24 @@ img {
     border-radius: 10px;
     background-color: #202020;
   }
+  
+  @media (min-width:320px)  {
+    .display-text {
+      font-size: 20px;
+    }
+  }
+
+  @media (min-width:1281px) {
+    .display-text {
+      font-size: 30px;
+    }
+  }
 
   .display-text {
-    color: #1df52f;
+    color: #61afff;
     font-family: Orbitron;
     letter-spacing: 1px;
-    font-size: 30px;
-    opacity: 0.4;
+    opacity: 0.7;
   }
   
   .inner-clock-face::before {
@@ -254,4 +297,9 @@ img {
     background: #ee791a;
     width: 45%;
     height: 2px;
+  }
+
+  .swiper-slide {
+    height: 20vh;
+    padding-bottom: 80vh;
   }
