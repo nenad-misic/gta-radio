@@ -1,3 +1,7 @@
+body[scroll="true"] .swiper-slide>img {
+  scale: 0.7 !important;
+  opacity: 0.7 !important;
+}
 
 @font-face {
   font-family: 'Orbitron';
@@ -18,7 +22,20 @@
   background: #282828;
   transition: all 1s;
 }
+
+.overlay_loading {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: #282828;
+  transition: all 0.5s;
+}
+
 .overlay>img {
+  width: 20% !important;
+}
+.overlay_loading>img {
   width: 20% !important;
 }
 img {
