@@ -9,6 +9,10 @@ var disappear = false;
 var total_scrolls = 0;
 var first_time = true;
 
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 function reset_ruler_fast() {
     let hr = document.getElementById("loading_ruler")
     hr.style.width = `${hr.getBoundingClientRect().width}px`;
@@ -123,7 +127,14 @@ swiper.on('activeIndexChange', function () {
             wait_counter += 1;
             await sleep(5);
             if (wait_counter >= 2000) {
-                break;
+                while (!audio.duration) {
+                    wait_counter += 1;
+                    await sleep(5);
+                    if (wait_counter >= 2000) {
+                        localStorage.removeItem("last_index");
+                        document.location.reload();
+                    }
+                }
             }
         }
 
@@ -161,7 +172,8 @@ swiper.on('activeIndexChange', function () {
 
 let last_user_index = localStorage.getItem("last_index");
 if (!last_user_index) {
-    last_user_index = 15; //K Rose, ofc
+    last_user_index = randomIntFromInterval(0, series_flattened.length - 1);
+    console.log(last_user_index)
     localStorage.setItem("last_index", last_user_index)
 }
 
