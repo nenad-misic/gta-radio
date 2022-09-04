@@ -53,10 +53,10 @@ body[scroll="true"] .swiper-slide>img {
 }
 
 .overlay>img {
-  width: 15em !important;
+  width: 10em !important;
 }
 .overlay_loading>img {
-  width: 15em !important;
+  width: 10em !important;
 }
 img {
   object-fit: contain;
